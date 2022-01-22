@@ -33,12 +33,12 @@ public class ThirdPersonShooterController : MonoBehaviour
 
         Vector2 screenCenterPoint = new Vector2(Screen.width / 2f, Screen.height / 2f);
         Ray ray = Camera.main.ScreenPointToRay(screenCenterPoint);
-        Transform hitTransform = null; //! FOR HITSCAN
+        //Transform hitTransform = null; //! FOR HITSCAN
         if (Physics.Raycast(ray, out RaycastHit raycastHit, 999f, aimColliderLayerMask))
         {
             debugTransform.position = raycastHit.point;
             mouseWorldPosition = raycastHit.point;
-            hitTransform = raycastHit.transform; //! FOR HITSCAN
+            //hitTransform = raycastHit.transform; //! FOR HITSCAN
         }
 
         if (starterAssetsInputs.aim)
@@ -61,31 +61,31 @@ public class ThirdPersonShooterController : MonoBehaviour
         }
 
         //! -----> SHOOTING PROJECTILE
-        // if (starterAssetsInputs.shoot)
-        // {
-        //     Vector3 aimDir = (mouseWorldPosition - spawnBulletPosition.position).normalized;
-        //     Instantiate(pfBulletProjectile, spawnBulletPosition.position, Quaternion.LookRotation(aimDir, Vector3.up));
-        //     starterAssetsInputs.shoot = false;
-        // }
+        if (starterAssetsInputs.shoot)
+        {
+            Vector3 aimDir = (mouseWorldPosition - spawnBulletPosition.position).normalized;
+            Instantiate(pfBulletProjectile, spawnBulletPosition.position, Quaternion.LookRotation(aimDir, Vector3.up));
+            starterAssetsInputs.shoot = false;
+        }
 
 
         //! -----> SHOOTING HITSCAN
-        if (starterAssetsInputs.shoot)
-        {
-            if (hitTransform != null)
-            {
-                if (hitTransform.GetComponent<BulletTarget>() != null)
-                {
-                    Debug.Log("This is a TARGET!");
-                    //Instantiate(vfxHitGreen, transform.position, Quaternion.identity);
-                }
-                else
-                {
-                    Debug.Log("This is NOT a target");
-                    //Instantiate(vfxHitRed, transform.position, Quaternion.identity);
-                }
-            }
-            starterAssetsInputs.shoot = false;
-        }
+        // if (starterAssetsInputs.shoot)
+        // {
+        //     if (hitTransform != null)
+        //     {
+        //         if (hitTransform.GetComponent<BulletTarget>() != null)
+        //         {
+        //             Debug.Log("This is a TARGET!");
+        //             //Instantiate(vfxHitGreen, transform.position, Quaternion.identity);
+        //         }
+        //         else
+        //         {
+        //             Debug.Log("This is NOT a target");
+        //             //Instantiate(vfxHitRed, transform.position, Quaternion.identity);
+        //         }
+        //     }
+        //     starterAssetsInputs.shoot = false;
+        // }
     }
 }
